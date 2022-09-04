@@ -104,15 +104,25 @@
 
           function OnFullscreen() {
               fullscreenButton.style.visibility = "hidden";
-              canvas.style.visibility = "visible";
+              container.style.visibility = "visible";
+              openFullscreen();
               createUnityInstance(canvas, config, (progress) => {
                   progressBarFull.style.width = 100 * progress + "%";
               }).then((unityInstance) => {
-                  unityInstance.SetFullscreen(1);
                   loadingBar.style.display = "none";
               }).catch((message) => {
                   alert(message);
               });
+          }
+
+          function openFullscreen() {
+              if (container.requestFullscreen) {
+                  container.requestFullscreen();
+              } else if (container.webkitRequestFullscreen) { /* Safari */
+                  container.webkitRequestFullscreen();
+              } else if (container.msRequestFullscreen) { /* IE11 */
+                  container.msRequestFullscreen();
+              }
           }
           
 
